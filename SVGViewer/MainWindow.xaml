@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:SVGViewer"
         mc:Ignorable="d"
         Title="Svg Viewer" Height="600" Width="800">
-    <Grid>
 
-    </Grid>
+    <Image Name="display" Margin="10"/>
 </Window>
