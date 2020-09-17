@@ -6,4 +6,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Svg2Xaml" Version="0.3.0.7" />
+  </ItemGroup>
+
 </Project>
