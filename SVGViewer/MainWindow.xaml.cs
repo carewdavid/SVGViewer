@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace SVGViewer
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        //Bound to Ctrl-O
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+            if (openDialog.ShowDialog() == true)
+            {
+                Uri chosenFile = new Uri(openDialog.FileName);
+                display.Source = new BitmapImage(chosenFile);
+            }
         }
     }
 }
