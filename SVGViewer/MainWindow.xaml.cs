@@ -96,5 +96,41 @@ namespace SVGViewer
             }
             pos = -1;
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Left)
+            {
+                PreviousImage();
+            }else if(e.Key == Key.Right)
+            {
+                NextImage();
+            }
+        }
+
+        private void NextImage()
+        {
+            //Error handling boilerplate
+            //Just no-op if anything is wrong, the user can still fix it by opening something from a different directory
+            if(files == null || pos < 0)
+            {
+                return;
+            }
+
+            pos = (pos + 1) % files.Length; //Wrap around
+            LoadImage(new Uri(files[pos]));
+        }
+
+        private void PreviousImage()
+        {
+            if (files == null || pos < 0)
+            {
+                return;
+            }
+
+            int temp = pos - 1;
+            pos = temp < 0 ? files.Length - 1 : temp;
+            LoadImage(new Uri(files[pos]));
+        }
     }
 }
