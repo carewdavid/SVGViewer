@@ -1,18 +1,10 @@
 ﻿using Microsoft.Win32;
+using Svg2Xaml;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SVGViewer
 {
@@ -33,7 +25,39 @@ namespace SVGViewer
             if (openDialog.ShowDialog() == true)
             {
                 Uri chosenFile = new Uri(openDialog.FileName);
-                display.Source = new BitmapImage(chosenFile);
+                LoadImage(chosenFile);
+            }
+        }
+
+        private void LoadImage(Uri uri)
+        {
+            string path = uri.AbsolutePath;
+            try
+            {
+                if (path.EndsWith(".svg"))
+                {
+                    using (FileStream stream = File.OpenRead(path))
+                    {
+                        //Convert svg to xaml so Image knows how to display it
+                        //Only takes one line--now that's my kind of library
+                        var img = SvgReader.Load(stream);
+                        display.Source = img;
+                    }
+                }
+                else
+                {
+                    //Raster images aren't the point of this, but if we get one for some reason, we might as well do something useful
+                    display.Source = new BitmapImage(uri);
+                }
+
+                Title = $"SVG Viewer - {Path.GetFileName(path)}";
+            }
+            catch (Exception)
+            {
+                //YOLO
+                //But seriously, the only error handling it's worth it for us to bother with is keeping the program from crashing
+                //so the user can try another file.
+                Title = $"Could not show: {Path.GetFileName(path)}";
             }
         }
     }
