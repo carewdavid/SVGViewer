@@ -16,6 +16,14 @@ namespace SVGViewer
         public MainWindow()
         {
             InitializeComponent();
+
+            //"Open with" from the file explorer passes the file as a command line argument
+            //So grab that if it's there
+            string[] args = Environment.GetCommandLineArgs();
+            if(args.Length > 1)
+            {
+                LoadImage(new Uri(args[1]));
+            }
         }
 
         //Bound to Ctrl-O
