@@ -13,6 +13,11 @@ namespace SVGViewer
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private string[] files;
+        private string curr;
+        private int pos;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -22,7 +27,9 @@ namespace SVGViewer
             string[] args = Environment.GetCommandLineArgs();
             if(args.Length > 1)
             {
-                LoadImage(new Uri(args[1]));
+                Uri uri = new Uri(args[1]);
+                LoadImage(uri);
+                LoadDir(uri);
             }
         }
 
@@ -34,12 +41,15 @@ namespace SVGViewer
             {
                 Uri chosenFile = new Uri(openDialog.FileName);
                 LoadImage(chosenFile);
+                LoadDir(chosenFile);
             }
         }
 
         private void LoadImage(Uri uri)
         {
             string path = uri.AbsolutePath;
+            //Make sure the path is in a normalized format so LoadDIr can find it
+            curr = Path.GetFullPath(path);
             try
             {
                 if (path.EndsWith(".svg"))
@@ -67,6 +77,24 @@ namespace SVGViewer
                 //so the user can try another file.
                 Title = $"Could not show: {Path.GetFileName(path)}";
             }
+        }
+
+        private void LoadDir(Uri uri)
+        {
+            string path = Path.GetDirectoryName(uri.AbsolutePath);
+
+            files = Directory.GetFiles(path, "*.svg");
+
+            //Figure out where in the directory our current file is
+            for(int i = 0; i < files.Length; i++)
+            {
+                if (curr.Equals(files[i]))
+                {
+                    pos = i;
+                    return;
+                }
+            }
+            pos = -1;
         }
     }
 }
