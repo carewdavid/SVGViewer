@@ -10,6 +10,7 @@
 
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Open" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="NavigationCommands.Refresh" Executed="CommandBinding_Executed_1"/>
     </Window.CommandBindings>
 
     <Image Name="display" Margin="10"/>

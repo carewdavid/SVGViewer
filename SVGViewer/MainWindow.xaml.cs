@@ -45,6 +45,12 @@ namespace SVGViewer
             }
         }
 
+        //Reload current image on F5
+        private void CommandBinding_Executed_1(object sender, ExecutedRoutedEventArgs e)
+        {
+            LoadImage(new Uri(curr));
+        }
+
         private void LoadImage(Uri uri)
         {
             string path = uri.AbsolutePath;
@@ -132,5 +138,7 @@ namespace SVGViewer
             pos = temp < 0 ? files.Length - 1 : temp;
             LoadImage(new Uri(files[pos]));
         }
+
+
     }
 }
