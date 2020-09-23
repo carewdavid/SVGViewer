@@ -34,7 +34,7 @@ namespace SVGViewer
         }
 
         //Bound to Ctrl-O
-        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void CommandBinding_Open(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFileDialog openDialog = new OpenFileDialog();
             if (openDialog.ShowDialog() == true)
@@ -46,7 +46,7 @@ namespace SVGViewer
         }
 
         //Reload current image on F5
-        private void CommandBinding_Executed_1(object sender, ExecutedRoutedEventArgs e)
+        private void CommandBinding_Reload(object sender, ExecutedRoutedEventArgs e)
         {
             LoadImage(new Uri(curr));
         }
