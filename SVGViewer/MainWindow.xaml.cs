@@ -15,7 +15,7 @@ namespace SVGViewer
     {
 
         private string[] files;
-        private string curr;
+        private Uri curr;
         private int pos;
 
         public MainWindow()
@@ -48,14 +48,14 @@ namespace SVGViewer
         //Reload current image on F5
         private void CommandBinding_Reload(object sender, ExecutedRoutedEventArgs e)
         {
-            LoadImage(new Uri(curr));
+            LoadImage(curr);
         }
 
         private void LoadImage(Uri uri)
         {
             string path = uri.AbsolutePath;
-            //Make sure the path is in a normalized format so LoadDIr can find it
-            curr = Path.GetFullPath(path);
+
+            curr = uri;
             try
             {
                 if (path.EndsWith(".svg"))
@@ -94,7 +94,8 @@ namespace SVGViewer
             //Figure out where in the directory our current file is
             for(int i = 0; i < files.Length; i++)
             {
-                if (curr.Equals(files[i]))
+                //Make sure the path is in a normalized format so it matches
+                if (Path.GetFullPath(curr.AbsolutePath).Equals(files[i]))
                 {
                     pos = i;
                     return;
