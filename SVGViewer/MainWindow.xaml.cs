@@ -49,6 +49,7 @@ namespace SVGViewer
         private void CommandBinding_Reload(object sender, ExecutedRoutedEventArgs e)
         {
             LoadImage(curr);
+            LoadDir(curr);
         }
 
         private void LoadImage(Uri uri)
